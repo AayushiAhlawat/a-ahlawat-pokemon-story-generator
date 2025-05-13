@@ -1,6 +1,6 @@
 # 💡 Pokémon Story Generator
 
-A full-stack web app that fetches Pokémon data from the [PokeAPI](https://pokeapi.co/) and uses the [OpenAI API](https://platform.openai.com/) to generate creative stories based on a user-supplied theme.
+A full-stack web app that fetches Pokémon data from the [PokeAPI](https://pokeapi.co/docs/v2) and uses the [OpenAI API](https://platform.openai.com/) to generate creative stories based on a user-supplied theme.
 
 ---
 
