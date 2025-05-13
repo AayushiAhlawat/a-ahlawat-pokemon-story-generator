@@ -1,41 +1,112 @@
-# Pokémon Story Generator Test Project
+# 💡 Pokémon Story Generator
 
-## Objective
-
-This test project challenges developers to build a Node.js application that integrates the Pokémon API (PokeAPI) and OpenAI API to create a Pokémon-themed story generator. Developers must implement all core functionality based on the outlined requirements.
+A full-stack web app that fetches Pokémon data from the [PokeAPI](https://pokeapi.co/) and uses the [OpenAI API](https://platform.openai.com/) to generate creative stories based on a user-supplied theme.
 
 ---
 
-## Features to Implement
+## ✨ Features
 
-1. **Fetch Pokémon Data**:
-   - Create a route to fetch Pokémon details (name, types, abilities, and an image) from the PokeAPI.
+### Backend (Node.js + Express)
+- **GET /pokemon/:name** — Returns Pokémon name, types, abilities, and image.
+- **POST /story** — Returns a creative story using OpenAI based on the provided Pokémon and theme.
+- **Validation** — Input validation with Joi.
+- **Caching** — In-memory cache with `node-cache` (10-minute TTL).
+- **Rate Limiting** — Max 10 requests/minute.
+- **Custom Logging** — Logs request method, path, status, and response time.
 
-2. **Generate Pokémon Stories**:
-   - Create a route to generate creative stories based on a Pokémon and a user-provided theme using the OpenAI API.
+### Frontend (React)
+- Input forms for Pokémon name and story theme.
+- Buttons to fetch details and generate story.
+- Error handling and result display.
 
-## Bonus Objectives
-
-3. **Caching**:
-   - Implement a caching layer to reduce redundant API calls to the PokeAPI. This will optimize performance for frequently requested Pokémon.
-
-4. **Input Validation**:
-   - Ensure inputs (Pokémon name and theme) are validated. For example, check that the Pokémon name is a non-empty string.
-
-5. **Request Logging**:
-   - Create middleware to log incoming requests and responses for debugging and monitoring purposes.
-
-6. **Rate Limiting**:
-   - Implement rate limiting to prevent abuse of the API endpoints.
-
-7. **Testing**:
-   - Write unit tests for the routes to ensure functionality and reliability.
-
-8. **Documentation**:
-   - Add comments to your code and include details in the README about how caching, validation, and rate-limiting mechanisms are implemented.
+### Testing
+- **Jest + Supertest** backend tests for route validation and rate limiting.
 
 ---
 
-## PokeAPI documentation
+## 📁 Project Structure
+```
+test-app/
+├── routes/
+│   ├── pokemon.js
+│   └── story.js
+├── middleware/
+│   └── logger.js
+├── __tests__/
+│   └── api.test.js
+├── client/
+│   ├── src/
+│   │   ├── App.js
+│   │   └── App.css
+├── .env
+├── index.js
+└── package.json
+```
 
-https://pokeapi.co/docs/v2
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone and install dependencies
+```bash
+git clone <repo-url>
+cd test-app
+npm install
+```
+
+### 2. Add your OpenAI API key
+Create a `.env` file:
+```
+OPENAI_API_KEY=your_openai_key
+PORT=3000
+```
+
+### 3. Start the backend server
+```bash
+npm run dev
+```
+
+### 4. Start the frontend
+```bash
+cd client
+npm install
+npm start
+```
+The frontend runs on `http://localhost:3001`, proxying API calls to `localhost:3000`.
+
+---
+
+## 📅 Usage
+
+### From the UI:
+- Enter a valid Pokémon name (e.g. `pikachu`) and click **"Click for Pokemon Details"**.
+- Enter a theme (e.g. `mystical cave`) and click **"Click for Generating Pokemon Story"**.
+- See the story and Pokémon info on the same page.
+
+### Input Validations:
+- Invalid names (e.g. `@@@`) return: `Invalid Pokemon name Format`
+- Empty or too short theme returns: `Theme must be at least 3 characters in length`
+- Rate limit exceeded: `Too many requests, please try again later.`
+
+---
+
+## 🔧 Run Tests
+
+### Run backend test suite:
+```bash
+npm test
+```
+Ensure `package.json` has:
+```json
+"test": "jest --testPathIgnorePatterns=client/"
+```
+
+---
+
+## 📄 Tech Stack
+- **Backend:** Node.js, Express, Joi, node-cache, express-rate-limit
+- **AI:** OpenAI (gpt-3.5-turbo)
+- **Frontend:** React, Axios
+- **Testing:** Jest, Supertest
+
+---
